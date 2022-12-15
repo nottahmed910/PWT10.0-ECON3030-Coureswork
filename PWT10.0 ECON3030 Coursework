@@ -5,3 +5,41 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('https://raw.githubusercontent.com/jivizcaino/PWT_10.0/main/pwt100.csv', encoding="latin-1")
 
 type(df)
+
+df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
+df_subset
+df_subset.to_csv('pwt_subset.csv', index=False)
+
+
+df.applymap(lambda x : round(x,2) if type(x)!=str else x)
+
+def replace_nan(x):
+ if type(x)!=str: return 0 if np.isnan(x) else x
+ else: return x
+ 
+df.applymap(replace_nan)
+
+df1 = df[(df.country.isin(['Argentina', 'India', 'South Africa', 'United States']))
+& (df['year'] == 2010) ]
+df1
+
+df1 = df1.set_index('country')
+df1
+
+df1.columns = 'year','population', 'total GDP'
+df1
+
+df1['population'] = df1['population'] *1e6
+df1
+
+df1['GDP percap'] = df1['total GDP']*1e6/df1['population']
+df1
+
+df1 = df1.sort_values(by='GDP percap', ascending=False)
+df1
+
+ax = df1['GDP percap'].plot(kind='bar')
+ax.set_xlabel('country', fontsize=12)
+ax.set_ylabel('GDP per capita', fontsize=12)
+plt.show() 
+
