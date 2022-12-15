@@ -6,13 +6,8 @@ df = pd.read_csv('https://raw.githubusercontent.com/jivizcaino/PWT_10.0/main/pwt
 
 type(df)
 
-df.applymap(lambda x : round(x,2) if type(x)!=str else x)
-
-def replace_nan(x):
- if type(x)!=str: return 0 if np.isnan(x) else x
- else: return x
- 
-df.applymap(replace_nan)
+df_records_dropped = df.dropna(axis=0, how='any')
+df_records_dropped.info()
 
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
