@@ -27,3 +27,5 @@ df_subset.assign('ipw' = 'cgdpo'/'emp')
 df_subset.assign('iphw' = 'cgdpo'/('emp'*'avh'))
 df_subset.assign('ipuhc' = 'cgdpo'/('emp'*'hc'))
 df_subset.assign('iphhc' = 'cgdpo'/('emp'*'avh'*'hc'))
+
+df[['ipw', 'iphw', 'ipuhc', 'iphhc']].quantile(.95)
