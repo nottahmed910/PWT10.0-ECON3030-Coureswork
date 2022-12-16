@@ -11,7 +11,7 @@ df_records_dropped.info()
 
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
-df_subset.to_csv('pwt_subset.csv', index=False)
+df_subset.to_csv('pwt_subset.csv', index=True)
 
 df1 = df1.set_index('country')
 df1
