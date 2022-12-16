@@ -6,6 +6,8 @@ df = pd.read_csv('https://raw.githubusercontent.com/jivizcaino/PWT_10.0/main/pwt
 
 type(df)
 
+# We created a subset for the variables we are interested in, including the descriptive statistics.
+
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
 df_subset.to_csv('pwt_subset.csv', index=False)
@@ -20,17 +22,112 @@ def replace_nan(x):
  
 df.applymap(replace_nan) 
 
+# We set the index as country.
+
 df1 = df.set_index('country')
 df1
 
 type(df1)
+
+# We created new variables.
 
 df_subset.assign('ipw' == 'cgdpo'/'emp')
 df_subset.assign('iphw' == 'cgdpo'/('emp'*'avh'))
 df_subset.assign('ipuhc' == 'cgdpo'/('emp'*'hc'))
 df_subset.assign('iphhc' == 'cgdpo'/('emp'*'avh'*'hc'))
 
+# We identified the countries in the 90th and 10th percentiles and the 95th and 5th percentiles according to our descriptive statistics.
+
 df.describe(include='ipw', percentiles=[.5, .10, .90, .95])
 df.describe(include='iphw', percentiles=[.5, .10, .90, .95])
 df.describe(include='ipuhc', percentiles=[.5, .10, .90, .95])
 df.describe(include='iphhc', percentiles=[.5, .10, .90, .95])
+
+# There are 20 scatter plots in total, comparing 𝑘, h, 𝑎𝑣h, 𝛼, and 𝐴 against log gdp per capita, per worker, per hour worked, and per unit of human capital.
+
+plt.scatter(x=cn, y=log(cgdpo/pop))
+ax.set_xlabel('Capital Stock', fontsize=12)
+ax.set_ylabel('log GDP per capita', fontsize=12)
+plt.show()
+plt.scatter(x=cn, y=log(cgdpo/emp))
+ax.set_xlabel('Capital Stock', fontsize=12)
+ax.set_ylabel('log GDP per worker', fontsize=12)
+plt.show()
+plt.scatter(x=cn, y=log(cgdpo/emp*avh))
+ax.set_xlabel('Capital Stock', fontsize=12)
+ax.set_ylabel('log GDP per hour worked', fontsize=12)
+plt.show()
+plt.scatter(x=cn, y=log(cgdpo/(emp*hc)))
+ax.set_xlabel('Capital Stock', fontsize=12)
+ax.set_ylabel('log GDP per unit of human capital', fontsize=12)
+plt.show()
+
+plt.scatter(x=(hc/emp), y=log(cgdpo/pop))
+ax.set_xlabel('Average human capital', fontsize=12)
+ax.set_ylabel('log GDP per capita', fontsize=12)
+plt.show()
+plt.scatter(x=(hc/emp), y=log(cgdpo/emp))
+ax.set_xlabel('Average human capital', fontsize=12)
+ax.set_ylabel('log GDP per worker', fontsize=12)
+plt.show()
+plt.scatter(x=(hc/emp), y=log(cgdpo/emp*avh))
+ax.set_xlabel('Average human capital', fontsize=12)
+ax.set_ylabel('log GDP per hour worked', fontsize=12)
+plt.show()
+plt.scatter(x=(hc/emp), y=log(cgdpo/(emp*hc)))
+ax.set_xlabel('Average human capital', fontsize=12)
+ax.set_ylabel('log GDP per unit of human capital', fontsize=12)
+plt.show()
+
+
+plt.scatter(x=avh, y=log(cgdpo/pop))
+ax.set_xlabel('Average annual hours worked', fontsize=12)
+ax.set_ylabel('log GDP per capita', fontsize=12)
+plt.show()
+plt.scatter(x=avh, y=log(cgdpo/emp))
+ax.set_xlabel('Average annual hours worked', fontsize=12)
+ax.set_ylabel('log GDP per worker', fontsize=12)
+plt.show()
+plt.scatter(x=avh, y=log(cgdpo/emp*avh))
+ax.set_xlabel('Average annual hours worked', fontsize=12)
+ax.set_ylabel('log GDP per hour worked', fontsize=12)
+plt.show()
+plt.scatter(x=avh, y=log(cgdpo/(emp*hc)))
+ax.set_xlabel('Average annual hours worked', fontsize=12)
+ax.set_ylabel('log GDP per unit of human capital', fontsize=12)
+plt.show()
+
+
+plt.scatter(x=labsh, y=log(cgdpo/pop))
+ax.set_xlabel('Share of labour compensation in GDP at current national prices', fontsize=12)
+ax.set_ylabel('log GDP per capita', fontsize=12)
+plt.show()
+plt.scatter(x=labsh, y=log(cgdpo/emp))
+ax.set_xlabel('Share of labour compensation in GDP at current national prices', fontsize=12)
+ax.set_ylabel('log GDP per worker', fontsize=12)
+plt.show()
+plt.scatter(x=labsh, y=log(cgdpo/emp*avh))
+ax.set_xlabel('Share of labour compensation in GDP at current national prices', fontsize=12)
+ax.set_ylabel('log GDP per hour worked', fontsize=12)
+plt.show()
+plt.scatter(x=labsh, y=log(cgdpo/(emp*hc)))
+ax.set_xlabel('Share of labour compensation in GDP at current national prices', fontsize=12)
+ax.set_ylabel('log GDP per unit of human capital', fontsize=12)
+plt.show()
+
+plt.scatter(x=ctfp, y=log(cgdpo/pop))
+ax.set_xlabel('TFP level at current PPPs', fontsize=12)
+ax.set_ylabel('log GDP per capita', fontsize=12)
+plt.show()
+plt.scatter(x=ctfp, y=log(cgdpo/emp))
+ax.set_xlabel('TFP level at current PPPs', fontsize=12)
+ax.set_ylabel('log GDP per worker', fontsize=12)
+plt.show()
+plt.scatter(x=ctfp, y=log(cgdpo/emp*avh))
+ax.set_xlabel('TFP level at current PPPs', fontsize=12)
+ax.set_ylabel('log GDP per hour worked', fontsize=12)
+plt.show()
+plt.scatter(x=ctfp, y=log(cgdpo/(emp*hc)))
+ax.set_xlabel('TFP level at current PPPs', fontsize=12)
+ax.set_ylabel('log GDP per unit of human capital', fontsize=12)
+plt.show()
