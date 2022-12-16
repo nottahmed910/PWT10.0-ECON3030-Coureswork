@@ -18,7 +18,21 @@ def replace_nan(x):
  
 df.applymap(replace_nan) 
 
+<<<<<<< Updated upstream
 df1 = df.set_index('country')
 df1
 
 df.info
+=======
+type(df1)
+
+df1 = df1.set_index('country')
+df1
+
+df_subset.assign(income per worker = cgdpo/emp)
+df_subset.assign(income per hour worked = cgdpo/(emp*avh))
+df_subset.assign(income per unit of human capital = cgdpo/(emp*hc))
+df_subset.assign(income per hour of human capital = cgdpo/(emp*avh*hc))
+
+
+>>>>>>> Stashed changes
