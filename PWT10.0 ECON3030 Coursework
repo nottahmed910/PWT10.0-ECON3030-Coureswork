@@ -8,7 +8,7 @@ type(df)
 
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
-df_subset.to_csv('pwt_subset.csv', index='country')
+df_subset.to_csv('pwt_subset.csv', index=False)
 
 def replace_nan(x):
  if type(x)!=str: 
@@ -23,9 +23,12 @@ df1
 
 type(df1)
 
-df_subset.assign('ipw' = 'cgdpo'/'emp')
-df_subset.assign('iphw' = 'cgdpo'/('emp'*'avh'))
-df_subset.assign('ipuhc' = 'cgdpo'/('emp'*'hc'))
-df_subset.assign('iphhc' = 'cgdpo'/('emp'*'avh'*'hc'))
+df_subset.assign('ipw' == 'cgdpo'/'emp')
+df_subset.assign('iphw' == 'cgdpo'/('emp'*'avh'))
+df_subset.assign('ipuhc' == 'cgdpo'/('emp'*'hc'))
+df_subset.assign('iphhc' == 'cgdpo'/('emp'*'avh'*'hc'))
 
-df[['ipw', 'iphw', 'ipuhc', 'iphhc']].quantile(.95)
+df.describe(include='ipw', percentiles=[.5, .10, .90, .95])
+df.describe(include='iphw', percentiles=[.5, .10, .90, .95])
+df.describe(include='ipuhc', percentiles=[.5, .10, .90, .95])
+df.describe(include='iphhc', percentiles=[.5, .10, .90, .95])
