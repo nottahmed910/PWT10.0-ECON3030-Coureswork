@@ -6,14 +6,19 @@ df = pd.read_csv('https://raw.githubusercontent.com/jivizcaino/PWT_10.0/main/pwt
 
 type(df)
 
-df_records_dropped = df.dropna(axis=0, how='any')
-df_records_dropped.info()
-
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
 df_subset.to_csv('pwt_subset.csv', index=True)
 
+df_subset.apply(np.max, axis=0)
+df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']].apply(np.max, axis=0)
+
+def replace_nan(x):
+ if type(x)!=str: return 0 if np.isnan(x) else x
+ else: return x
+ 
+df.applymap(replace_nan) 
 df1 = df.set_index('country')
 df1
 
-df.describe(include='year')
+df1 = pwt_subset[pwt_subset['year'] == 2019].describe()
