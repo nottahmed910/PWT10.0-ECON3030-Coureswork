@@ -6,13 +6,13 @@ df = pd.read_csv('https://raw.githubusercontent.com/jivizcaino/PWT_10.0/main/pwt
 
 type(df)
 
-# We created a subset for the variables we are interested in, including the descriptive statistics.
+# We created a subset for the variables we are interested in, this was including the descriptive statistics.
 
 df_subset = df[['country', 'countrycode', 'year', 'rgdpe', 'rgdpo', 'pop', 'emp', 'avh', 'hc']]
 df_subset
 df_subset.to_csv('pwt_subset.csv', index=False)
 
-# We chose the year 2019 as it conatins the least amount of misssing values. Moreover, it is the most recent year with data and the latest available.
+# The reason we chose the year 2019 is because it conatins the least amount of missing values. However, 2019 is most recent year with data and the latest available.
 
 def replace_nan(x):
  if type(x)!=str: 
